@@ -1,5 +1,6 @@
-import { Button, Grid } from '@mui/material';
-import { FastField, Form, Formik } from 'formik';
+import { Button, Grid, Checkbox, FormControlLabel } from '@mui/material';
+import { pink } from '@mui/material/colors';
+import { FastField, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import FormikControl from '../FormikControl/index';
 
@@ -24,6 +25,7 @@ export default function LoginForm() {
         { 'id': 3, 'title': 'Music' },
     ]
 
+
     const initialLoginModel = {
         userName: "123",
         userPassword: "1234",
@@ -31,7 +33,8 @@ export default function LoginForm() {
         skills: [],
         gender: 1,
         favorite: [],
-        date: new Date()
+        date: new Date(),
+        confirm: false
     };
     const loginFormValidation = Yup.object().shape({
         userName: Yup.string()
@@ -56,11 +59,6 @@ export default function LoginForm() {
                 resetForm()
             }}
         >
-            {/* {formikProps => {
-                const { values, error, touched } = formikProps;
-                console.log({ values, error, touched })
-
-                return ( */}
             <Form style={{ marginTop: '20px' }}>
                 <Grid
                     container spacing={2}
@@ -116,11 +114,6 @@ export default function LoginForm() {
                     </Grid>
 
                     <Grid item xs={12}>
-                        {/* <FormikControl.DatePicker
-                            name="date"
-                            label="Date"
-                        /> */}
-
                         <FastField
                             name="date"
                             label="Date"
@@ -130,12 +123,20 @@ export default function LoginForm() {
                     </Grid>
 
                     <Grid item xs={12}>
+
+                        <FastField
+                            name="confirm"
+                            label="I agree"
+
+                            component={FormikControl.CheckboxConfirm}
+                        />
+                    </Grid>
+
+                    <Grid item xs={12}>
                         <Button type='submit'>Submit</Button>
                     </Grid>
                 </Grid>
             </Form>
-            {/* ) */}
-            {/* }} */}
         </Formik>
     )
 }
