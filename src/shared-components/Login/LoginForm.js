@@ -1,52 +1,51 @@
-import { Button, Grid, Checkbox, FormControlLabel } from '@mui/material';
-import { pink } from '@mui/material/colors';
-import { FastField, Field, Form, Formik } from 'formik';
+import { Button, Grid } from '@mui/material';
+import { FastField, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import FormikControl from '../FormikControl/index';
 
 export default function LoginForm() {
 
-    const selectList = [
-        { 'id': 1, 'label': 'Test1' },
-        { 'id': 2, 'label': 'Test2' },
-        { 'id': 3, 'label': 'Test3' },
-        { 'id': 4, 'label': 'Test4' },
-    ]
+    // const selectList = [
+    //     { id: 1, label: 'Test1' },
+    //     { id: 2, label: 'Test2' },
+    //     { id: 3, label: 'Test3' },
+    //     { id: 4, label: 'Test4' },
+    // ]
 
-    const genderList = [
-        { 'id': 1, 'title': 'Male' },
-        { 'id': 2, 'title': 'Female' },
-        { 'id': 3, 'title': 'Other' },
-    ]
+    // const genderList = [
+    //     { id: 1, title: 'Male' },
+    //     { id: 2, title: 'Female' },
+    //     { id: 3, title: 'Other' },
+    // ]
 
-    const favoriteList = [
-        { 'id': 1, 'title': 'Coding' },
-        { 'id': 2, 'title': 'Female' },
-        { 'id': 3, 'title': 'Music' },
-    ]
+    // const favoriteList = [
+    //     { id: 1, title: 'Coding' },
+    //     { id: 2, title: 'Female' },
+    //     { id: 3, title: 'Music' },
+    // ]
 
 
     const initialLoginModel = {
-        userName: "123",
-        userPassword: "1234",
-        // skills: null,
-        skills: [],
-        gender: 1,
-        favorite: [],
-        date: new Date(),
-        confirm: false
+        userName: "",
+        userPassword: "",
+        // skills: null, // only one selection
+        // skills: [], // multiple selection
+        // gender: 1,
+        // favorite: [],
+        // date: new Date(),
+        // confirm: false
     };
+
     const loginFormValidation = Yup.object().shape({
         userName: Yup.string()
             .required("Username is required !"),
         userPassword: Yup.string()
             .required("Password is required !"),
-        skills: Yup.array().min(1, "Skill is required !"),
-        // skills: Yup.object().required("Skill is required !").nullable(),
-        favorite: Yup.array().min(1, "Favorite is required, asleast 1 !"),
-        // favorite: Yup.array().min(1).of(Yup.string().required()).required(),
+        // skills: Yup.object().required("Skill is required !").nullable(), only one selection
+        // skills: Yup.array().min(1, "Skill is required !"), // multiple selection
 
-        date: Yup.date().required("Date is required !"),
+        // favorite: Yup.array().min(1, "Favorite is required, asleast 1 !"),
+        // date: Yup.date().required("Date is required !"),
     });
 
 
@@ -55,7 +54,7 @@ export default function LoginForm() {
             initialValues={{ ...initialLoginModel }}
             validationSchema={loginFormValidation}
             onSubmit={(values, { setStatus, resetForm }) => {
-                console.log(values);
+                console.log(values)
                 resetForm()
             }}
         >
@@ -65,6 +64,7 @@ export default function LoginForm() {
                 >
                     <Grid item xs={12}>
                         <FastField
+                            focus
                             name='userName'
                             label='Username'
 
@@ -82,7 +82,7 @@ export default function LoginForm() {
                         />
                     </Grid>
 
-                    <Grid item xs={12}>
+                    {/* <Grid item xs={12}>
                         <FastField
                             name="skills"
                             label="Skills"
@@ -91,50 +91,69 @@ export default function LoginForm() {
 
                             component={FormikControl.DropdownList}
                         />
-                    </Grid>
+                    </Grid> */}
 
-                    <Grid item xs={12}>
+                    {/* <Grid item xs={12}>
                         <FastField
                             name="gender"
                             label="Gender"
                             options={genderList}
+                            row={+true}
 
                             component={FormikControl.RadioGroup}
                         />
-                    </Grid>
+                    </Grid> */}
 
-                    <Grid item xs={12}>
+                    {/* <Grid item xs={12}>
                         <FastField
                             name="favorite"
                             label="Favorite"
                             options={favoriteList}
-                            row={1}
+                            row={+true}
 
                             component={FormikControl.CheckboxList}
                         />
 
-                    </Grid>
+                    </Grid> */}
 
-                    <Grid item xs={12}>
+                    {/* <Grid item xs={12}>
                         <FastField
                             name="date"
                             label="Date"
 
                             component={FormikControl.DatePicker}
                         />
-                    </Grid>
+                    </Grid> */}
 
-                    <Grid item xs={12}>
+                    {/* <Grid item xs={12}>
                         <FastField
                             name="confirm"
                             label="I agree"
 
                             component={FormikControl.CheckboxConfirm}
                         />
-                    </Grid>
+                    </Grid> */}
 
                     <Grid item xs={12}>
-                        <Button type='submit'>Submit</Button>
+                        <Grid container spacing={2}>
+                            {/* <Grid item xs={4} /> */}
+
+                            <Grid item xs={6}>
+                                <FormikControl.ButtonReset />
+                            </Grid>
+
+                            <Grid item xs={6}>
+                                {/* <FormikControl.ButtonSubmit /> */}
+                                <Button
+                                    type="submit"
+                                    style={{ backgroundColor: '#42a5f5', color: 'inherit' }}
+                                    fullWidth
+                                >
+                                    Submit
+                                </Button>
+                            </Grid>
+
+                        </Grid>
                     </Grid>
                 </Grid>
             </Form>
