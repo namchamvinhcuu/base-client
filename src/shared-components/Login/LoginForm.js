@@ -67,6 +67,7 @@ export default function LoginForm() {
                         <FastField
                             name='userName'
                             label='Username'
+
                             component={FormikControl.Input}
                         />
                     </Grid>
@@ -76,6 +77,7 @@ export default function LoginForm() {
                             name='userPassword'
                             label='Password'
                             type='password'
+
                             component={FormikControl.Input}
                         />
                     </Grid>
@@ -83,21 +85,21 @@ export default function LoginForm() {
                     <Grid item xs={12}>
                         <FastField
                             name="skills"
-                            component={FormikControl.DropdownList}
-
                             label="Skills"
                             options={selectList}
                             multiple
+
+                            component={FormikControl.DropdownList}
                         />
                     </Grid>
 
                     <Grid item xs={12}>
                         <FastField
                             name="gender"
-                            component={FormikControl.RadioGroup}
-
                             label="Gender"
                             options={genderList}
+
+                            component={FormikControl.RadioGroup}
                         />
                     </Grid>
 
@@ -123,7 +125,6 @@ export default function LoginForm() {
                     </Grid>
 
                     <Grid item xs={12}>
-
                         <FastField
                             name="confirm"
                             label="I agree"
