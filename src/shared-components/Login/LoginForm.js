@@ -3,6 +3,14 @@ import { FastField, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import FormikControl from '../FormikControl/index';
 
+import { ACCESS_TOKEN, BASE_URL, LOGGEDIN_USER } from '../../constants';
+import { RemoveLocalStorage, SetLocalStorage, WarnAlert } from '../../utils';
+
+import axiosInstance from '../../axios-config/instance/index'
+
+import jwt_decode from 'jwt-decode';
+import { useNavigate } from 'react-router-dom';
+
 export default function LoginForm() {
 
     // const selectList = [
@@ -23,6 +31,8 @@ export default function LoginForm() {
     //     { id: 2, title: 'Female' },
     //     { id: 3, title: 'Music' },
     // ]
+
+
 
 
     const initialLoginModel = {
@@ -48,13 +58,67 @@ export default function LoginForm() {
         // date: Yup.date().required("Date is required !"),
     });
 
+    const navigate = useNavigate();
+
+    const login = async (values) => {
+        // e.preventDefault();
+
+
+        RemoveLocalStorage(ACCESS_TOKEN);
+        RemoveLocalStorage(LOGGEDIN_USER);
+        // RemoveLocalStorage(MENU_LIST);
+
+        let response = await axiosInstance.post(BASE_URL + 'login', values);
+        if (response?.data.HttpResponseCode === 200) {
+            let token = {
+                Token: response.data.Data.Token ?? null,
+                RefreshToken: response.data.Data.RefreshToken ?? null
+            };
+
+            // SetCookie(ACCESS_TOKEN, token);
+            SetLocalStorage(ACCESS_TOKEN, token);
+
+            let userInfo = jwt_decode(token.Token);
+            SetLocalStorage(LOGGEDIN_USER, userInfo);
+
+            // let userMenuList = await axiosInstance.get('menu/get-user-menu');
+            // let userMenuList = await axiosInstance.get('menu/get-by-accesstoken');
+            // let userMenuList = await MenuService.getUserMenus();
+            // setMenuList(userMenuList)
+
+            // let treeMenu = await MenuService.setTreeMenuUser(userMenuList);
+            // setTreeMenu(treeMenu);
+
+            // setFirstSelectedMenuId(treeMenu[0].MenuId);
+            // setFirstSelectedSubMenu(treeMenu[0].Child);
+
+            // let routes = await MenuService.buildRouterForLoggedInUser(userMenuList);
+            // setUserRoutes(routes);
+
+
+            // if (userMenuList.data.HttpResponseCode === 200) {
+            //     SetLocalStorage(MENU_LIST, userMenuList.data.Data);
+            // }
+
+
+            navigate('layout');
+        } else {
+            WarnAlert(`${response.data.ResponseMessage}`);
+        }
+
+
+    };
+
 
     return (
         <Formik
             initialValues={{ ...initialLoginModel }}
             validationSchema={loginFormValidation}
             onSubmit={(values, { setStatus, resetForm }) => {
-                console.log(values)
+                // console.log(values)
+                login(values)
+
+
                 resetForm()
             }}
         >
