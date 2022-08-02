@@ -1,5 +1,5 @@
-// const BASE_URL = "http://baseapi.autonsi.com/api/";
-const BASE_URL = "http://localhost:57232/api/";
+const BASE_URL = "http://baseapi.autonsi.com/api/";
+// const BASE_URL = "http://localhost:57232/api/";
 
 const ACCESS_TOKEN = "accessToken";
 const REFRESH_TOKEN = 'refreshToken';

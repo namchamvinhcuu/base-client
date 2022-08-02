@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { BASE_URL, ACCESS_TOKEN, LOGGEDIN_USER } from 'constants';
+import { BASE_URL, ACCESS_TOKEN, LOGGEDIN_USER } from '@constants';
 import dayjs from 'dayjs';
 import jwt_decode from 'jwt-decode';
 import { GetLocalStorage, SetLocalStorage, RemoveLocalStorage } from '../../utils/index';
@@ -29,7 +29,6 @@ axiosInstance.interceptors.request.use(async (request) => {
         return request;
     }
     else {
-
         let token = GetLocalStorage(ACCESS_TOKEN);
         if (token) {
 

@@ -16,9 +16,9 @@ function App() {
 
       <HistoryRouter history={history}>
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/login" element={<Login />} />
 
-          <Route path="/layout" element={<Layout />} >
+          <Route path="/" element={<Layout />} >
             {/* <Route element={<Layout Menus={menus} userName={userName} fistMenu={fistMenu} />}>
               {routers}
             </Route> */}
