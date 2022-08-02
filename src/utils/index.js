@@ -1,7 +1,7 @@
-import { GetCookie, SetCookie, RemoveCookie } from "./cookiesUtils";
-import DynamicIcon from "./iconUtils";
-import { GetLocalStorage, SetLocalStorage, RemoveLocalStorage } from "./localStorageUtils";
-import { SuccessAlert, WarnAlert, ErrorAlert } from "./informMessageUtils";
+import { GetCookie, SetCookie, RemoveCookie } from "./CookieUtils/index";
+import { DynamicIcon } from "./IconUtils/index";
+import { GetLocalStorage, SetLocalStorage, RemoveLocalStorage } from "./LocalStorageUtils/index";
+import { SuccessAlert, WarnAlert, ErrorAlert } from "./InformMessageUtils/index";
 
 export {
     GetCookie,

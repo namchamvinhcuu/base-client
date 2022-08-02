@@ -6,7 +6,7 @@ import FormikControl from '../FormikControl/index';
 import { ACCESS_TOKEN, BASE_URL, LOGGEDIN_USER } from '../../constants';
 import { RemoveLocalStorage, SetLocalStorage, WarnAlert } from '../../utils';
 
-import axiosInstance from '../../axios-config/instance/index'
+import AxiosInstance from 'axios-config'
 
 import jwt_decode from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
@@ -68,7 +68,7 @@ export default function LoginForm() {
         RemoveLocalStorage(LOGGEDIN_USER);
         // RemoveLocalStorage(MENU_LIST);
 
-        let response = await axiosInstance.post(BASE_URL + 'login', values);
+        let response = await AxiosInstance.post(BASE_URL + 'login', values);
         if (response?.data.HttpResponseCode === 200) {
             let token = {
                 Token: response.data.Data.Token ?? null,

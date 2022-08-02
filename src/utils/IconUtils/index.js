@@ -1,4 +1,3 @@
-
 import * as Icons from "@mui/icons-material";
 
 const DynamicIcon = ({ name, ...rest }) => {
@@ -6,4 +5,4 @@ const DynamicIcon = ({ name, ...rest }) => {
     return IconComponent ? <IconComponent {...rest} /> : null;
 };
 
-export default DynamicIcon 
+export { DynamicIcon } 

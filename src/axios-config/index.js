@@ -1,12 +1,12 @@
 import axios from 'axios';
-import { BASE_URL, ACCESS_TOKEN, LOGGEDIN_USER } from '@constants';
+import { BASE_URL, ACCESS_TOKEN, LOGGEDIN_USER } from 'constants';
 import dayjs from 'dayjs';
 import jwt_decode from 'jwt-decode';
-import { GetLocalStorage, SetLocalStorage, RemoveLocalStorage } from '../../utils/index';
-import history from "../../libraries/history/index";
+import { GetLocalStorage, SetLocalStorage, RemoveLocalStorage } from '../utils/index';
+import history from "../libraries/history/index";
 // import { BASE_URL } from 'constants/index';
 
-const axiosInstance = axios.create({
+const AxiosInstance = axios.create({
     baseURL: BASE_URL,
     timeout: 10 * 1000,
     withCredentials: false,
@@ -20,7 +20,7 @@ const axiosInstance = axios.create({
     },
 });
 
-axiosInstance.interceptors.request.use(async (request) => {
+AxiosInstance.interceptors.request.use(async (request) => {
     if (
         request.url.indexOf(BASE_URL + 'login') >= 0
         || request.url.indexOf(BASE_URL + 'refreshtoken') >= 0
@@ -39,7 +39,7 @@ axiosInstance.interceptors.request.use(async (request) => {
                 return request;
             }
 
-            const response = await axiosInstance.getNewAccessToken();
+            const response = await AxiosInstance.getNewAccessToken();
             if (response) {
                 token = GetLocalStorage(ACCESS_TOKEN);
                 request.headers.Authorization = `Bearer ${token.Token}`;
@@ -47,13 +47,13 @@ axiosInstance.interceptors.request.use(async (request) => {
             }
             else {
                 // WarnAlert('You lost your authorization, please login again !');
-                await axiosInstance.Logout();
+                await AxiosInstance.Logout();
                 return request;
             }
         }
         else {
             // WarnAlert('You lost your authorization, please login again !');
-            await axiosInstance.Logout();
+            await AxiosInstance.Logout();
             return request;
         }
 
@@ -63,7 +63,7 @@ axiosInstance.interceptors.request.use(async (request) => {
     return Promise.reject(err)
 });
 
-axiosInstance.interceptors.response.use(async (response) => {
+AxiosInstance.interceptors.response.use(async (response) => {
 
     // switch (response.data.HttpResponseCode) {
     //     case 200:
@@ -90,7 +90,7 @@ axiosInstance.interceptors.response.use(async (response) => {
 
     if (response.data.ResponseMessage === 'You lost your authorization, please login again !') {
         // WarnAlert('You lost your authorization, please login again !');
-        await axiosInstance.Logout();
+        await AxiosInstance.Logout();
         return response;
     }
     return response;
@@ -99,14 +99,14 @@ axiosInstance.interceptors.response.use(async (response) => {
     return Promise.reject(err)
 });
 
-axiosInstance.getNewAccessToken = async () => {
+AxiosInstance.getNewAccessToken = async () => {
     let token = GetLocalStorage(ACCESS_TOKEN);
     let postObj = {
         ExpiredToken: token.Token,
         RefreshToken: token.RefreshToken
     }
 
-    const response = await axiosInstance.post(BASE_URL + 'refreshtoken', postObj);
+    const response = await AxiosInstance.post(BASE_URL + 'refreshtoken', postObj);
 
     if (response.data.HttpResponseCode === 200) {
         let newTokenObj = response.data.Data;
@@ -117,7 +117,7 @@ axiosInstance.getNewAccessToken = async () => {
         return false;
 }
 
-axiosInstance.Logout = async () => {
+AxiosInstance.Logout = async () => {
     RemoveLocalStorage(ACCESS_TOKEN);
     RemoveLocalStorage(LOGGEDIN_USER);
     history.push({
@@ -125,4 +125,4 @@ axiosInstance.Logout = async () => {
     });
 }
 
-export default axiosInstance;
+export default AxiosInstance;
